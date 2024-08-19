@@ -1,12 +1,17 @@
 public class Luminaria {
     private boolean estado;
     private int intensidade;
+
+    public Luminaria() {
+        this.estado = false;
+        this.intensidade = 0;
+    }
     
-    public void Ligar() {
+    public void ligar() {
         this.estado = true;
     }
 
-    public void Desligar() {
+    public void desligar() {
         this.estado = false;
     }
 
