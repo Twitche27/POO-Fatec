@@ -1,4 +1,4 @@
-public class Maincarro {
+public class MainCarro {
     public static void main(String Args[]) {
         Carro carro1 = new Carro("Toyota", "Corolla", 2020, "preto");
         Carro carro2 = new Carro("Honda", "Civic", 2022, "prata");
