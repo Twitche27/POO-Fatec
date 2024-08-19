@@ -11,19 +11,19 @@ public class Carro {
         this.cor = cor;
     }
 
-    public String get_marca() {
+    public String getMarca() {
         return this.marca;
     }
 
-    public String get_modelo() {
+    public String getModelo() {
         return this.modelo;
     }
 
-    public int get_ano(){
+    public int getAno(){
         return this.ano;
     }
 
-    public String get_cor() {
+    public String getCor() {
         return this.cor;
     }
 }
