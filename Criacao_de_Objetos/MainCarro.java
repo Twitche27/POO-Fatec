@@ -1,3 +1,7 @@
+package Criacao_de_Objetos;
+
+import Definicao_de_Classe.Carro;
+
 public class MainCarro {
     public static void main(String Args[]) {
         Carro carro1 = new Carro("Toyota", "Corolla", 2020, "preto");

@@ -1,3 +1,5 @@
+package Estado_e_Comportamento;
+
 public class MainLuminaria {
 
     public static void testLuminaria(boolean estado) {

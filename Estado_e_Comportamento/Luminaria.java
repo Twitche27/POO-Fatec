@@ -1,3 +1,5 @@
+package Estado_e_Comportamento;
+
 public class Luminaria {
     private boolean estado;
     private int intensidade;
