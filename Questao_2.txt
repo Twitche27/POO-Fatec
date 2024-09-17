@@ -1,0 +1,1 @@
+A chamada explicita ao super da classe JogoDeTabuleiro chama o construtor da sua classe pai, a classe Jogo, passando o parametro 1 e realizando todas as ações do construtor da classe pai.
