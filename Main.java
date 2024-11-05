@@ -1,13 +1,8 @@
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
-        List<Animal> lista = new ArrayList<Animal>();
-        lista.add(new Gato("Pink", 5));
-        lista.add(new Cachorro("Covarde", 15));
-        for (int i = 0; i < lista.size(); i++) {
-            lista.get(i).fazerSom();
-        }
+        Recarga rec = new Recarga(new Date(), (float) 1.0);
+        System.out.println(rec.toString());
     }
 }
