@@ -1,10 +1,8 @@
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Recarga {
-    private Date data;
-    private float valor;
+    private final Date data;
+    private final float valor;
 
     public Recarga(Date data, float valor) {
         this.data = data;
@@ -19,10 +17,9 @@ public class Recarga {
         return this.valor;
     }
 
+    @Override
     public String toString() {
-        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        
-        return "Data:" +  formatter.format(this.data) + "\nValor:" + this.valor;
+        return String.format("Data: %tF %1$tT\nvalor: R$%.2f\n", this.data, this.valor);
     }
 
 }
