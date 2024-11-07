@@ -52,7 +52,11 @@ public class PrePago extends Assinante{
         }
         saida = saida.concat(String.format("Número de Recargas: %d\n", this.NumRecargas)).concat("Recargas:\n");
         for (int i = 0; i < this.recargas.length; i++) {
-            saida = saida.concat(String.format("Recarga %d\n", i+1)).concat(this.recargas[i].toString());
+            Calendar dataChamada = Calendar.getInstance();
+            dataChamada.setTime(this.chamadas[i].getData());
+            if (dataChamada.get(Calendar.MONTH) == mes) {
+                saida = saida.concat(String.format("Recarga %d\n", i+1)).concat(this.recargas[i].toString());
+            }
         }
         System.out.println(saida);
     }
