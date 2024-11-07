@@ -19,10 +19,10 @@ public abstract class Assinante {
 
     @Override
     public String toString() {
-        String saida = String.format("CPF: %s\nNome: %s\nNumero: %d\nChamadas:\n", this.cpf, this.nome, this.numero);
-        for (int i = 0; i < this.chamadas.length; i++) {
-            saida = saida.concat(String.format("Chamada %d\n", i+1)).concat(this.chamadas[i].toString());
-        }
+        String saida = String.format("CPF: %s\nNome: %s\nNumero: %d\n", this.cpf, this.nome, this.numero);
+        // for (int i = 0; i < this.chamadas.length; i++) {
+        //     saida = saida.concat(String.format("Chamada %d\n", i+1)).concat(this.chamadas[i].toString());
+        // }
         saida = saida.concat(String.format("Numero de Chamadas: %d\n", this.numChamadas));
         return saida;
     }

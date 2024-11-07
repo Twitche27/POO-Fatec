@@ -10,11 +10,11 @@ public class Chamada {
     }
 
     public Date getData() {
-        return data;
+        return this.data;
     }
 
     public int getDuracao() {
-        return duracao;
+        return this.duracao;
     }
 
     @Override
