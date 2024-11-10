@@ -1,63 +1,83 @@
 import java.util.Calendar;
 import java.util.Date;
 
-public class PrePago extends Assinante{
+public class PrePago extends Assinante {
+    private static final int TAM = 100;
+    private static final float CUSTO_POR_MINUTO = 1.45f;
+
     private float creditos;
-    private Recarga[] recargas;
-    private int NumRecargas;
+    private final Recarga[] recargas;
+    private int numRecargas;
 
     public PrePago(long cpf, String nome, int numero) {
         super(cpf, nome, numero);
-        this.recargas = new Recarga[100];
-        this.NumRecargas = this.recargas.length;
+        this.recargas = new Recarga[TAM];
+        this.numRecargas = 0;
+        this.creditos = 0;
     }
 
     public void recarregar(Date data, float valor) {
-        if (this.NumRecargas < this.recargas.length) {
-            recargas[this.NumRecargas] = new Recarga(data, valor);
-            this.creditos += recargas[this.NumRecargas].getValor();
-            this.NumRecargas = this.recargas.length;
+        if (numRecargas < TAM) {
+            recargas[numRecargas++] = new Recarga(data, valor);
+            creditos += valor;
+            System.out.println("Recarga realizada com sucesso!\n");
+        } else {
+            System.out.println("Número máximo de recargas atingido!\n");
         }
-        else {
-            System.out.println("Número Máximo de Recargas Atingido!");
-        }
-        
     }
 
     public void fazerChamada(Date data, int duracao) {
-        if (this.numChamadas < this.chamadas.length) {
-            if (this.creditos >= duracao*1.45) {
-                chamadas[this.numChamadas] = new Chamada(data, duracao);
-                this.creditos -= chamadas[this.numChamadas].getDuracao()*1.45;
-                this.numChamadas = this.recargas.length;
+        float custoChamada = duracao * CUSTO_POR_MINUTO;
+        
+        if (numChamadas < TAM) {
+            if (creditos >= custoChamada) {
+                chamadas[numChamadas++] = new Chamada(data, duracao);
+                creditos -= custoChamada;
+                System.out.println("Chamada realizada com sucesso!\n");
+            } else {
+                System.out.println("Créditos insuficientes para realizar a chamada!\n");
             }
-            else {
-                System.out.println("Saldos Insuficientes Para Realizar a Chamada!");
-            }
-        }
-        else {
-            System.out.println("Número Máximo de Chamadas Atingido!");
+        } else {
+            System.out.println("Número máximo de chamadas atingido!\n");
         }
     }
 
     public void imprimirFatura(int mes) {
-        String saida = super.toString();
-        for (int i = 0; i < this.chamadas.length; i++) {
-            Calendar dataChamada = Calendar.getInstance();
-            dataChamada.setTime(this.chamadas[i].getData());
-            if (dataChamada.get(Calendar.MONTH) == mes) {
-                saida = saida.concat(String.format("Chamada %d\n", i+1)).concat(this.chamadas[i].toString());
+        float totalChamadas = 0;
+        float totalRecargas = 0;
+
+        System.out.println(this.toString());
+        System.out.println("Fatura Pré-Pago - Mês: " + mes);
+        System.out.println("Chamadas:");
+
+        for (int i = 0; i < numChamadas; i++) {
+            Chamada chamada = chamadas[i];
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(chamada.getData());
+
+            if (cal.get(Calendar.MONTH) == mes - 1) {
+                float custo = chamada.getDuracao() * CUSTO_POR_MINUTO;
+                System.out.printf("Chamada %d - Data: %s, Duração: %d min, Valor: R$ %.2f%n",
+                        i + 1, chamada.getData(), chamada.getDuracao(), custo);
+                totalChamadas += custo;
             }
-            
         }
-        saida = saida.concat(String.format("Número de Recargas: %d\n", this.NumRecargas)).concat("Recargas:\n");
-        for (int i = 0; i < this.recargas.length; i++) {
-            Calendar dataChamada = Calendar.getInstance();
-            dataChamada.setTime(this.chamadas[i].getData());
-            if (dataChamada.get(Calendar.MONTH) == mes) {
-                saida = saida.concat(String.format("Recarga %d\n", i+1)).concat(this.recargas[i].toString());
+
+        System.out.println("\nRecargas:");
+        for (int i = 0; i < numRecargas; i++) {
+            Recarga recarga = recargas[i];
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(recarga.getData());
+
+            if (cal.get(Calendar.MONTH) == mes - 1) {
+                System.out.printf("Recarga %d - Data: %s, Valor: R$ %.2f%n", 
+                        i + 1, recarga.getData(), recarga.getValor());
+                totalRecargas += recarga.getValor();
             }
         }
-        System.out.println(saida);
+
+        System.out.printf("%nTotal de Chamadas: R$ %.2f%n", totalChamadas);
+        System.out.printf("Total de Recargas: R$ %.2f%n", totalRecargas);
+        System.out.printf("Créditos Restantes: R$ %.2f%n\n", creditos);
     }
 }
