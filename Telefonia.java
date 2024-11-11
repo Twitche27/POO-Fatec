@@ -18,29 +18,29 @@ public class Telefonia {
     }
 
     public void cadastrarAssinante() {
-        Scanner scanner = new Scanner(System.in);
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Digite o tipo de assinante (1- Pré-Pago, 2- Pós-Pago): ");
+            int tipo = scanner.nextInt();
 
-        System.out.println("Digite o tipo de assinante (1- Pré-Pago, 2- Pós-Pago): ");
-        int tipo = scanner.nextInt();
+            System.out.print("CPF: ");
+            long cpf = scanner.nextLong();
+            System.out.print("Nome: ");
+            scanner.nextLine();
+            String nome = scanner.nextLine();
+            System.out.print("Número do telefone: ");
+            int numero = scanner.nextInt();
 
-        System.out.print("CPF: ");
-        long cpf = scanner.nextLong();
-        System.out.print("Nome: ");
-        scanner.nextLine();
-        String nome = scanner.nextLine();
-        System.out.print("Número do telefone: ");
-        int numero = scanner.nextInt();
-
-        if (tipo == 1 && numPrePagos < TAM) {
-            prePagos[numPrePagos++] = new PrePago(cpf, nome, numero);
-            System.out.println("Assinante pré-pago cadastrado com sucesso!");
-        } else if (tipo == 2 && numPosPagos < TAM) {
-            System.out.print("Valor da assinatura: ");
-            float assinatura = scanner.nextFloat();
-            posPagos[numPosPagos++] = new PosPago(cpf, nome, numero, assinatura);
-            System.out.println("Assinante pós-pago cadastrado com sucesso!");
-        } else {
-            System.out.println("Erro ao cadastrar assinante! Verifique o tipo ou se há espaço para cadastro.");
+            if (tipo == 1 && numPrePagos < TAM) {
+                prePagos[numPrePagos++] = new PrePago(cpf, nome, numero);
+                System.out.println("Assinante pré-pago cadastrado com sucesso!");
+            } else if (tipo == 2 && numPosPagos < TAM) {
+                System.out.print("Valor da assinatura: ");
+                float assinatura = scanner.nextFloat();
+                posPagos[numPosPagos++] = new PosPago(cpf, nome, numero, assinatura);
+                System.out.println("Assinante pós-pago cadastrado com sucesso!");
+            } else {
+                System.out.println("Erro ao cadastrar assinante! Verifique o tipo ou se há espaço para cadastro.");
+            }
         }
     }
 
