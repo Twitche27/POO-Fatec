@@ -1,23 +1,20 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public abstract class Jogador {
-    private String nome;
-    private int coins;
-    private int casa_atual;
-    private List<Propriedade> propriedades;
+    protected  final String nome;
+    protected int coins;
+    protected int casa_atual;
+    protected Mapa mapa;
 
-    public Jogador(String nome) {
+    public Jogador(String nome, Mapa mapa) {
         this.nome = nome;
         this.coins = 300;
         this.casa_atual = 0;
-        this.propriedades = new ArrayList<>();
+        this.mapa = mapa;
     }
 
-    public void apropriar(Propriedade propriedade) {
+    protected void apropriar(Propriedade propriedade) {
         propriedade.setDono(this);
-        this.propriedades.add(propriedade);
     }
 
     public String getNome() {
@@ -28,22 +25,26 @@ public abstract class Jogador {
         return this.coins;
     }
 
-    public void addCoins(int coins) {
+    protected void addCoins(int coins) {
         this.coins += coins;
     }
 
-    public void andar() {
+    public abstract void jogar();
+
+    protected int andar() {
         int casas_andadas = new Random().nextInt(6) + 1;
-        if ((this.casa_atual + casas_andadas) > 20) {
+        if ((this.casa_atual + casas_andadas) >= 20) {
             this.casa_atual = (this.casa_atual + casas_andadas) - 20;
-            this.coins += 100;
+            addCoins(100);;
         }
-        else {
+        else{
             this.casa_atual += casas_andadas;
         }
+        return this.casa_atual;
     }
 
-    
+    protected void pagar(Propriedade propriedade) {
+        propriedade.getDono().addCoins(propriedade.getCusto_aluguel());
+        addCoins(-propriedade.getCusto_aluguel());
+    }
 }
-
-public 
