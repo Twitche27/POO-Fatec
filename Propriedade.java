@@ -1,27 +1,33 @@
 public class Propriedade {
-    private final int custo_venda;
+    private final int custo;
     private final int custo_aluguel;
     private Jogador dono;
 
-    public Propriedade(int custo_venda, int custo_aluguel) {
-        this.custo_venda = custo_venda;
+    public Propriedade(int custo, int custo_aluguel) {
+        this.custo = custo;
         this.custo_aluguel = custo_aluguel;
         this.dono = null;
     }
 
-    public Jogador getDono() {
-        return dono;
+    public Propriedade(Propriedade outra) {
+        this.custo = outra.custo;
+        this.custo_aluguel = outra.custo_aluguel;
+        this.dono = null;
     }
 
-    public void setDono(Jogador jogador) {
-        this.dono = jogador;
+    public int getCusto() {
+        return custo;
     }
 
     public int getCusto_aluguel() {
         return custo_aluguel;
     }
 
-    public int getCusto_venda() {
-        return custo_venda;
+    public Jogador getDono() {
+        return dono;
+    }
+
+    public void setDono(Jogador dono) {
+        this.dono = dono;
     }
 }

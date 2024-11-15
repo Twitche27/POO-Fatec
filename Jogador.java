@@ -11,9 +11,21 @@ public abstract class Jogador {
         this.casa_atual = 0;
     }
 
+    public Jogador copia() {
+        try {
+            Jogador copia = this.getClass().getConstructor(String.class).newInstance(this.nome);
+            copia.coins = this.coins;
+            copia.casa_atual = this.casa_atual;
+            return copia;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao copiar Jogador", e);
+        }
+    }
+
     protected void apropriar(Propriedade propriedade) {
         propriedade.setDono(this);
     }
+
 
     public String getNome() {
         return this.nome;
@@ -38,8 +50,7 @@ public abstract class Jogador {
         if ((this.casa_atual + casas_andadas) >= 20) {
             this.casa_atual = (this.casa_atual + casas_andadas) - 20;
             addCoins(100);
-        }
-        else{
+        } else {
             this.casa_atual += casas_andadas;
         }
         return this.casa_atual;

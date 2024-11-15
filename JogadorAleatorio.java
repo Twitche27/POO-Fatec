@@ -12,7 +12,7 @@ public class JogadorAleatorio extends Jogador {
         andar();
         Propriedade propridade_atual = mapa.getPropriedades().get(getCasa_atual());
         if (propridade_atual.getDono() == null) {
-            if (this.getCoins() > propridade_atual.getCusto_venda() && new Random().nextBoolean()) {
+            if (this.getCoins() > propridade_atual.getCusto() && new Random().nextBoolean()) {
                 apropriar(propridade_atual);
             }
         }
@@ -20,5 +20,4 @@ public class JogadorAleatorio extends Jogador {
             pagar(propridade_atual);
         }
     }
-    
 }

@@ -25,12 +25,11 @@ public class Jogo {
         Collections.addAll(Jogadores, new JogadorImpulsivo("J1"), new JogadorExigente("J2"), new JogadorCauteloso("J3"), new JogadorAleatorio("J4"));
         return new Mapa(propriedades, Jogadores);
     }
-
     public static void main(String[] args) {
         try {
             Mapa mapa = gerarMapa();
             Jogador ganhador = mapa.getJogadores().get(0);
-            int i = 0;
+            int i;
             int time_outs = 0;
             List<Integer> qnt_turnos = new ArrayList<>();
             Map<String, Integer> qnt_ganhadores = new HashMap<>();
@@ -38,12 +37,12 @@ public class Jogo {
                 qnt_ganhadores.put(jogador.getNome(), 0);
             }
             for (int j = 0; j < 300; j++) {
-                List<Jogador> jogadores = mapa.getJogadores();
+                Mapa mapa_atual = new Mapa(mapa);
+                List<Jogador> jogadores = new ArrayList<>(mapa_atual.getJogadores());
                 for (i = 0; i < 1000; i++) {
                     Jogador jogador_da_rodada = jogadores.get(i%jogadores.size());
-                    jogador_da_rodada.jogar(mapa);
+                    jogador_da_rodada.jogar(mapa_atual);
                     if (jogador_da_rodada.getCoins() < 0) {
-                        System.out.printf("Jogador %s foi eliminado!\n", jogador_da_rodada.getNome());
                         jogadores.remove(jogador_da_rodada);
                         if (jogadores.size() == 1) {
                             ganhador = jogadores.get(0);
@@ -61,13 +60,7 @@ public class Jogo {
                     }
                 }
                 qnt_turnos.add(i);
-                System.out.println("ganhador.get");
-                for (Jogador jogador : mapa.getJogadores()) {
-                    String nome_ganhador;
-                    if ((nome_ganhador = jogador.getNome()).equals(ganhador.getNome())) {
-                        qnt_ganhadores.put(nome_ganhador, qnt_ganhadores.get(nome_ganhador)+(1/300));
-                    }
-                }
+                qnt_ganhadores.put(ganhador.getNome(), qnt_ganhadores.get(ganhador.getNome())+1);
             }
             int soma_qnt_turnos = 0;
             for (Integer ints : qnt_turnos) {
@@ -75,19 +68,28 @@ public class Jogo {
             }
             double media_qnt_turnos = (double)soma_qnt_turnos / qnt_turnos.size();
 
-            Integer ganhador_final = qnt_ganhadores.get("J1");
-                    for (Integer vitorias_jogador : qnt_ganhadores.values()) {
-                        if (vitorias_jogador > ganhador_final) {
-                            ganhador_final = vitorias_jogador;
-                        }
-                    }
+            Integer valor_final = qnt_ganhadores.get("J1");
+            String ganhador_final = (String) qnt_ganhadores.keySet().toArray()[0];
+            for (Map.Entry<String, Integer> jogador : qnt_ganhadores.entrySet()) {
+                if (jogador.getValue() > valor_final) {
+                    valor_final = jogador.getValue();
+                    ganhador_final = jogador.getKey();
+                }
+            }
+            Jogador comportamento_vencedor = null;
+            for (Jogador jogador : mapa.getJogadores()) {
+                if (jogador.getNome().equals(ganhador_final)) {
+                    comportamento_vencedor = jogador;
+                }
+            }
             System.out.println("Partidas terminadas por time out: " + Integer.toString(time_outs));
-            System.out.println("Média de turnos: " + Double.toString(media_qnt_turnos));
-            System.out.println("Porcentagem de vitória do jogador impulsivo: " + qnt_ganhadores.get("J1"));
-            System.out.println("Porcentagem de vitória do jogador exigente: " + qnt_ganhadores.get("J2"));
-            System.out.println("Porcentagem de vitória do jogador cauteloso: " + qnt_ganhadores.get("J3"));
-            System.out.println("Porcentagem de vitória do jogador aleatório: " + qnt_ganhadores.get("J4"));
-            System.out.println("Porcentagem de vitória do jogador impulsivo: " + qnt_ganhadores.get("J4"));
+            System.out.printf("Média de turnos: %d\n", (int) media_qnt_turnos);
+            System.out.println("Porcentagem de vitória do jogador impulsivo: " + qnt_ganhadores.get("J1")/3 + "%");
+            System.out.println("Porcentagem de vitória do jogador exigente: " + qnt_ganhadores.get("J2")/3 + "%");
+            System.out.println("Porcentagem de vitória do jogador cauteloso: " + qnt_ganhadores.get("J3")/3 + "%");
+            System.out.println("Porcentagem de vitória do jogador aleatório: " + qnt_ganhadores.get("J4")/3 + "%");
+            System.out.println("Comportamento que mais ganha: " + comportamento_vencedor.getClass().getSimpleName());
+            
         }
         catch (IOException e) {
             System.out.println("Não foi possível gerar o mapa");

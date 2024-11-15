@@ -9,13 +9,12 @@ public class JogadorExigente extends Jogador {
         andar();
         Propriedade propridade_atual = mapa.getPropriedades().get(getCasa_atual());
         if (propridade_atual.getDono() == null) {
-            if (this.getCoins() > propridade_atual.getCusto_venda() && propridade_atual.getCusto_aluguel() > 50) {
+            if (this.getCoins() > propridade_atual.getCusto() && propridade_atual.getCusto_aluguel() > 50) {
                 apropriar(propridade_atual);
             }
         }
         else {
             pagar(propridade_atual);
         }
-    }
-    
+    }   
 }
