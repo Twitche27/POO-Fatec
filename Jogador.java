@@ -1,16 +1,14 @@
 import java.util.Random;
 
 public abstract class Jogador {
-    protected  final String nome;
-    protected int coins;
-    protected int casa_atual;
-    protected Mapa mapa;
+    private final String nome;
+    private int coins;
+    private int casa_atual;
 
-    public Jogador(String nome, Mapa mapa) {
+    public Jogador(String nome) {
         this.nome = nome;
         this.coins = 300;
         this.casa_atual = 0;
-        this.mapa = mapa;
     }
 
     protected void apropriar(Propriedade propriedade) {
@@ -21,6 +19,10 @@ public abstract class Jogador {
         return this.nome;
     }
 
+    public int getCasa_atual() {
+        return casa_atual;
+    }
+
     public int getCoins() {
         return this.coins;
     }
@@ -29,13 +31,13 @@ public abstract class Jogador {
         this.coins += coins;
     }
 
-    public abstract void jogar();
+    public abstract void jogar(Mapa mapa);
 
     protected int andar() {
         int casas_andadas = new Random().nextInt(6) + 1;
         if ((this.casa_atual + casas_andadas) >= 20) {
             this.casa_atual = (this.casa_atual + casas_andadas) - 20;
-            addCoins(100);;
+            addCoins(100);
         }
         else{
             this.casa_atual += casas_andadas;

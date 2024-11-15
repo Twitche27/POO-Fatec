@@ -1,15 +1,15 @@
 public class JogadorImpulsivo extends Jogador{
 
-    public JogadorImpulsivo(String nome, Mapa mapa) {
-        super(nome, mapa);
+    public JogadorImpulsivo(String nome) {
+        super(nome);
     }
     
     @Override
-    public void jogar() {
+    public void jogar(Mapa mapa) {
         andar();
-        Propriedade propridade_atual = mapa.getMapa().get(casa_atual);
+        Propriedade propridade_atual = mapa.getPropriedades().get(getCasa_atual());
         if (propridade_atual.getDono() == null) {
-            if (this.coins > propridade_atual.getCusto_venda()) {
+            if (this.getCoins() > propridade_atual.getCusto_venda()) {
                 apropriar(propridade_atual);
             }
         }

@@ -2,13 +2,19 @@
 import java.util.List;
 
 public class Mapa {
-    private List<Propriedade> mapa;
+    private final List<Propriedade> propriedades;
+    private final List<Jogador> jogadores;
 
-    public Mapa(List<Propriedade> mapa) {
-        this.mapa = mapa;
+    public Mapa(List<Propriedade> propriedades, List<Jogador> jogadores) {
+        this.propriedades = propriedades;
+        this.jogadores = jogadores;
     }
 
-    public List<Propriedade> getMapa() {
-        return mapa;
+    public List<Propriedade> getPropriedades() {
+        return propriedades;
+    }
+
+    public List<Jogador> getJogadores() {
+        return jogadores;
     }
 }
